@@ -15,7 +15,7 @@ Um Änderungen beizutragen, einfach auf Github einen Pull Request stellen.
 
 Das Dokument findest du an folgenden Orten:
 
- * Quellcode: https://github.com/gwrtheyrn/HSR-ZF-PnProg
+ * Quellcode: https://github.com/HSR-Stud/PnProg
  * PDF-Version: http://studentenportal.ch/dokumente/pnprog/
 
 Vielen Dank!
