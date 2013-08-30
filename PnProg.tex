@@ -14,7 +14,8 @@
 \usepackage{ccicons} % Creative commons
 \author{Danilo Bargen, Jonas Furrer, Christian Fässler}
 \title{Reptitionsfragen PnProg}
-\date{Version vom \today}
+\input{revision}
+\date{Version vom \revisiondate}
 
 \begin{document}
 
@@ -85,11 +86,11 @@ Created, Alive, Terminated
 \subsubsection{Wie kommt ein Thread in den Zustand "terminiert"?}
 
 Ein Thread wird terminiert entweder durch den Aufruf von \texttt{stop()} auf dem Thread, oder wenn
-die \texttt{run()} methode abgeschossen ist (\texttt{run()} returns).
+die \texttt{run()} methode abgeschlossen ist (\texttt{run()} returns).
    
 \subsubsection{Kann er nach Terminierung neu gestartet werden?}
 
-Nein, ein beendeter Thread kenn nicht neu gestartet werden.
+Nein, ein beendeter Thread kann nicht neu gestartet werden.
    
 \subsubsection{Was bewirkt \texttt{t.join()}?}
 
@@ -495,9 +496,9 @@ oder Trust (Empfänger ist verpflichet das Objekt nicht zu verändern oder weite
 \subsubsection{In welche Locking Kategorien kann man Objekte unterteilen?}
  
 \begin{itemize}
-	\item Non-shared: Auf dem Stack, Confinement, nicht zwischen Thread austauschbar -> keine Synchronisation nötig.
-	\item Read-only-shared: Zwischen Threads nutzbar aber keine Änderungen erlaubt -> keine Synchronisation nötig.
-	\item Shared: Mehrere Threads greifen gleichzeitig zu, Änderungen erlaubt -> Synchronisation nötig.
+	\item Non-shared: Auf dem Stack, Confinement, nicht zwischen Thread austauschbar $\rightarrow$ keine Synchronisation nötig.
+	\item Read-only-shared: Zwischen Threads nutzbar aber keine Änderungen erlaubt $\rightarrow$ keine Synchronisation nötig.
+	\item Shared: Mehrere Threads greifen gleichzeitig zu, Änderungen erlaubt $\rightarrow$ Synchronisation nötig.
 \end{itemize}
 
 \subsubsection{Sind die Java Collections thread-safe? Warum?}
@@ -630,9 +631,9 @@ beendet und können nicht wiederverwendet werden.
   
 \subsubsection{Was sind Latches? }
 
-Synchronisationsstruktur mit Zähler (ähnlich Semaphore), Threads warten bis Zähler \texttt{<= 0} wird.
+Synchronisationsstruktur mit Zähler (ähnlich Semaphore), Threads warten bis Zähler \texttt{<=} 0 wird.
 Ein Latch synchronisiert ein oder mehrere Threads auf eine Anzahl Ereignisse, ein Ereignis
-entspricht einer Countdown Operation, synchronisiert wird bis der Zähler <= 0 ist.
+entspricht einer Countdown Operation, synchronisiert wird bis der Zähler \texttt{<=} 0 ist.
 
 In Java: \texttt{CountdownLatch}. Warten mit \texttt{await()} und Zähler reduzieren mit
 \texttt{countDown()}. Da \texttt{countDown()} nicht blockiert, können Ereignisse durch beliebige
@@ -648,8 +649,8 @@ können alle weitermachen.
 In Java: \texttt{CyclicBarrier}. Warten mit \texttt{await()}. Anzahl Threads muss vorgegeben sein
 wenn so viele Threads warten wird die Barrier aufgehoben.
 
-Eine Barrier ist beliebig oft verwendbar. Sie wird beim aufheben der Blockierung automatisch
-resetted, oder kann manuel zurückgesetzt werden.
+Eine Barrier ist beliebig oft verwendbar. Sie wird beim Aufheben der Blockierung automatisch
+resetted, oder kann manuell zurückgesetzt werden.
   
 \subsubsection{Wie lassen sich Synchronisationspunkte sonst noch Umsetzen?}
 
@@ -672,10 +673,10 @@ In Java implementiert durch \texttt{Exchanger}.
   
 \subsubsection{Was sind asynchrone Aufrufe?}
 
-Asynchrone Ausführung von (unter umständen langlaufenden) Operationen, Caller kann dabei
+Asynchrone Ausführung von (unter Umständen langlaufenden) Operationen, Caller kann dabei
 weiterarbeiten. Die asynchrone Operation wird in einem seperaten Thread erledigt (z.B Task in
-Thread Pool). Das Resultat der asynchronen Operation kann mittels Future Objekt oder Completion
-Callback zugegriffen.
+Thread Pool). Auf das Resultat der asynchronen Operation kann mittels Future Objekt oder Completion
+Callback zugegriffen werden.
   
 \subsubsection{Was sind \texttt{Future}-Objekte und Completion Callbacks? Wofür verwendet man sie?}
 
@@ -727,7 +728,7 @@ Man unterscheidet Server Sockets und Client Sockets.
  
 \subsubsection{Welche Informationen hat eine Socket-Adresse?}
 
-Die Socket-Adress beinhaltet die IP-Adresse (v4/v6) und den Port, falls ein DNS-Name vorhanden
+Die Socket-Adress beinhaltet die IP-Adresse (v4/v6) und den Port, falls ein DNS-Name 
 existiert, ist auch dieser enthalten.
  
 \subsubsection{Welche Schritte braucht es, um den Server zu kontaktieren?}
@@ -770,13 +771,13 @@ SSL-Verbindungen werden mittels einer Factory aufgebaut. Die Factory liefert ein
 
 Falls ein Server mehrere Adressen hat, kann er einen Socket an alle Adressen binden, dafür
 verwendet er eine sogenannten \textit{Wildcard-Bind}: \texttt{bind(new InetSocketAddress(4321))} oder
-\texttt{null} für Adresse einsetzen.
+\texttt{null} für die Adresse einsetzen.
   
 \subsubsection{Was ist das Backlog?}
 
 Das Backlog ist die Queue für wartende eingehende Verbindungen. Wenn die Queue voll ist, werden
-\texttt{connect()} abfragen abgewiesen. Gesetzt werden kann die Backlog Grösse im Konstruktor des
-Sockets oder beim binden. Default Backlog Grösse ist System abhängig, moderner Default ist ca. 128. 
+\texttt{connect()} Abfragen abgewiesen. Gesetzt werden kann die Backlog Grösse im Konstruktor des
+Sockets oder beim Binden. Default Backlog Grösse ist System abhängig, moderner Default ist ca. 128. 
   
 \subsubsection{Was passiert wenn der Server \texttt{accept()} aufruft?}
 
@@ -848,7 +849,7 @@ nicht-blockierend realisieren?}
 \begin{itemize}
 	\item \texttt{read()}, blockiert Standard Socket bis Daten verfügbar sind
 	\item \texttt{write()}, blockiert Standard Socket wenn Sende-Puffer voll ist
-	\item \texttt{connect()}, blockert Standard Socket bis Verbindung aufgebaut wird
+	\item \texttt{connect()}, blockiert Standard Socket bis Verbindung aufgebaut wird
 \end{itemize}
 
 \subsubsection{Sind NIO SocketChannels thread-safe?}
@@ -910,7 +911,7 @@ Auf einem Selector können mehrere NIO Channels registriert werden, der Selector
 Channels und wartet auf Ereignisse. Der Selector wartet so lange bis Ereignisse vorliegen, diese
 können dann abgefragt werden. Dieses Verhalten ist eine Abbildung des I/O Multiplexers.
   
-\subsubsection{Wie verwendet Mann den Selector?}
+\subsubsection{Wie verwendet man den Selector?}
 
 Selectors werden über eine Factory erzeugt (\texttt{Selector.open()}).
 
@@ -1000,7 +1001,7 @@ ausgeführt werden.
 		PreThreaded, PreForked)
 	\item Synchronisation, locking zwischen Service Threads/Prozessen. (PreThreaded, PreForked)
 	\item Reaktionszeit, wie schnell kann/muss auf eine Nachricht reagiert werden?
-	\item Fault-Tolerance, Robusthiet des Server bei Fehler.
+	\item Fault-Tolerance, Robustheit des Servers bei Fehlern.
 \end{itemize}
 
 \subsubsection{Wie funktioniert das Reactor Pattern?}
@@ -1041,7 +1042,7 @@ ausgeführt werden.
 \begin{itemize}
 	\item Das Half-Sync/Half-Async Pattern arbeitet mit zwei Service-Verarbeitungs-Layern.
 	\item Es gibt den Service Thread, dieser ist asynchron, d.h. er kann immer weiter arbeiten, er
-		nimmt Verbindungen von Clients an, kreiert den socket und fügt diesen in eine Queue (meisten
+		nimmt Verbindungen von Clients an, kreiert den Socket und fügt diesen in eine Queue (meisten
 		Blocking Queue) ein. Das zweite Layer sind dann $n$ synchrone Service Threads (muss halt bestimmt
 		werden wie viele es gibt) - diese nehmen aus der Queue den erstbesten Socket heraus und
 		bearbeiten diesen.
@@ -1053,10 +1054,10 @@ ausgeführt werden.
 	\item Es gibt $n$ Servicethreads, diese haben alle die gleiche Implementierung. Immer nur einer
 		ist Leader, alle anderen Follower.
 	\item Jeweils der der Leader ist, akzeptiert eine Client Verbindung, sobald  die Client Verbindung
-		akkzeptiert wurde, wird er automatisch zum  Follower und arbeitet die Client Kommunikation ab.
+		akzeptiert wurde, wird er automatisch zum  Follower und arbeitet die Client Kommunikation ab.
 	\item Follower sind entweder am abarbeiten von Client Kommunikationen oder  warten bis sie wieder
 		Leader sind und einen neuen Client bekommen können.
-	\item Um sicher zu stellen, dass nur jeweils ein thread leader ist, muss dies synchronisert werden:
+	\item Um sicher zu stellen, dass nur jeweils ein Thread Leader ist, muss dies synchronisert werden:
 \begin{verbatim}
 synchronized(serverSocket) {
     clientSocket = serverSocket.accept();
@@ -1072,7 +1073,7 @@ synchronized(serverSocket) {
 \begin{itemize}
 	\item Kein Overhead wie bei TCP
 	\item Verbindungsaufbau nicht nötig 
-	\item Senden immer möglich (egal ob Gegenseite bereit odre nicht)
+	\item Senden immer möglich (egal ob Gegenseite bereit oder nicht)
 	\item Multicast möglich
 \end{itemize}
 
